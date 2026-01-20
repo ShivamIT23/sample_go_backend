@@ -1,1 +1,1 @@
-web: bin/wallet-backend-shivam
+web: bin/test
