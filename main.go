@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"net/http"
 	"log"
 )
@@ -11,17 +12,20 @@ func main(){
 	http.HandleFunc(("/"),func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w,"this is only for test");
 	})
-
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8002" // Fallback for local testing
+	}
 	s := &http.Server{
-		Addr : ":8002",
+		Addr : ":" + port,
 		Handler : nil,
 	}
 
-	serving()
+	serving(port)
 
 	log.Fatal(s.ListenAndServe())
 }
 
-func serving(){
-	fmt.Println("Server is running on port 8002")
+func serving(port string){
+	fmt.Println(`Server is running on port `+ port)
 }
